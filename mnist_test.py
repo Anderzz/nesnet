@@ -44,7 +44,7 @@ net.fit(x_train[0:1000], y_train[0:1000], epochs=35, lr=0.1)
 # test on 3 samples
 out = net.predict(x_test[0:3])
 for i in range(3):
-    print(f"prediction : {np.argmax(out[i])}")
+    print(f"\nprediction : {np.argmax(out[i])}")
     print(f"real       : {np.argmax(y_test[i])}")
     print("")
 print("\n")
