@@ -5,7 +5,7 @@ from keras.utils import np_utils
 from dense_layer import Dense
 from conv import Convolutional
 from reshape import Reshape
-from activation_functions import Sigmoid
+from activation_functions import Sigmoid, Softmax, Tanh, Relu, LeakyRelu
 from loss import binary_cross_entropy, dbinary_cross_entropy
 from network import train, predict
 
@@ -35,6 +35,7 @@ network = [
     Sigmoid(),
     Dense(100, 2),
     Sigmoid()
+    #LeakyRelu()
 ]
 
 # train
@@ -53,4 +54,4 @@ for x, y in zip(x_test, y_test):
     output = predict(network, x)
     print(f"pred: {np.argmax(output)}, true: {np.argmax(y)}")
 # print how many out of total we got correct
-print(f"{np.sum(np.argmax(y_test, axis=1) == np.argmax(output, axis=1))} out of {len(y_test)} correct")
+print(f"\n{np.sum(np.argmax(y_test, axis=1) == np.argmax(output, axis=1))}/{len(y_test)} correct")

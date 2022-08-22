@@ -26,13 +26,35 @@ class Sigmoid(Activation):
 
 class Softmax(Layer):
     def forward(self, input):
-        tmp = np.exp(input)
-        self.output = tmp / np.sum(tmp)
+        e = np.exp(input)
+        self.output = e / np.sum(e)
         return self.output
     
-    def backward(self, output_gradient, learning_rate):
+    def backward(self, output_gradient, lr):
         n = np.size(self.output)
-        return np.dot((np.identity(n) - self.output.T) * self.output, output_gradient)
+        I = np.identity(n)
+        return np.dot((I - self.output.T) * self.output, output_gradient)
+
+
+class Relu(Activation):
+    def __init__(self):
+        def relu(x):
+            return np.maximum(x, 0)
+
+        def drelu(x):
+            return 1 * (x > 0)
+
+        super().__init__(relu, drelu)
+
+class LeakyRelu(Activation):
+    def __init__(self, alpha = 0.01):
+        def leaky_relu(x):
+            return np.maximum(x, alpha * x)
+
+        def dleaky_relu(x):
+            return 1 * (x > 0) + alpha * (x < 0)
+
+        super().__init__(leaky_relu, dleaky_relu)
 
 # def tanh(x):
 #      return np.tanh(x)
